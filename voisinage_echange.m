@@ -22,3 +22,8 @@ for i=1:size(sigma,2)
   end
 end
 
+
+matriceSigma = supp_doublons(matriceSigma); %Supp doublons
+matriceSigma = matriceSigma(2:end,:); % Inutile d'avoir la valeur initiale de sigma ?
+end
+
