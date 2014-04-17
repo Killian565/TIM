@@ -1,4 +1,4 @@
-function [ Vi] = annexe_voisinage(sigma )
+function [ Vi] = voisinage_insertion(sigma )
 %ANNEXE_VOISINAGE Summary of this function goes here
 %   Detailed explanation goes here
 
