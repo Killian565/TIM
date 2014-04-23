@@ -17,7 +17,7 @@ for k=1:Q^2
       vect1(i) = im(nouvPos(1)+i,nouvPos(2)+1);
       vect2(i) = im(nouvPosDroite(1)+i,nouvPosDroite(2)+1);
     end
-    sommeCor = sommeCor + correlation(vect1,vect2,'vertical');
+    sommeCor = sommeCor + correlation(vect1,vect2);
   end
   
   if (posI(1)+1<size(im))
@@ -28,8 +28,10 @@ for k=1:Q^2
       vect1(i) = im(nouvPos(1)+1,nouvPos(2)+i);
       vect2(i) = im(nouvPosDroite(1)+1,nouvPosDroite(2)+i);
     end
-    sommeCor = sommeCor + correlation(vect1,vect2,'horizontal');
+    sommeCor = sommeCor + correlation(vect1,vect2);
   end
 
 end
+
+resultat = sommeCor;
 
