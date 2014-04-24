@@ -4,32 +4,46 @@ Q = size(im,1)/P;
 
 sommeCor = 0;
 
-for k=1:Q^2
+for k=1:size(sigma,2)
 
-  posI = rg2pos(k,P,Q);
-  nouvPos = pos2pos(posI,P,Q,sigma);
-
-  if (posI(2)+1<size(im))
-    k_droite = k+1;
-    posDroite = rg2pos(k_droite,P,Q);
-    nouvPosDroite = pos2pos(posDroite,P,Q,sigma);
-    for i=1:P
-      vect1(i) = im(nouvPos(1)+i,nouvPos(2)+1);
-      vect2(i) = im(nouvPosDroite(1)+i,nouvPosDroite(2)+1);
+    for i = 1:size(sigma,2)
+        aux = sigma(i);
+        sigma_moins_1(aux) = i;
     end
-    sommeCor = sommeCor + correlation(vect1,vect2,'vertical');
-  end
   
-  if (posI(1)+1<size(im))
-    k_bas = k+Q;
-    posBas = rg2pos(k_bas,P,Q);
-    nouvPosBas = pos2pos(posBas,P,Q,sigma);
-    for i=1:P
-      vect1(i) = im(nouvPos(1)+1,nouvPos(2)+i);
-      vect2(i) = im(nouvPosDroite(1)+1,nouvPosDroite(2)+i);
+    if mod(k,Q)~=0
+        posK = rg2pos(sigma_moins_1(k),P,Q)+1;
+        posKdroite = rg2pos(sigma_moins_1(k+1),P,Q)+1;
+
+        vect1 = im(posK(1):posK(1)+P-1,posK(2)+P-1);
+        vect2 = im(posKdroite(1):posKdroite(1)+P-1,posKdroite(2)+P-1);
+
+        if max(vect1)~=0 && max(vect2)~=0
+            sommeCor = sommeCor +  correlation(vect1,vect2);
+        else
+            %sommeCor = sommeCor-0.5;
+        end
+
     end
-    sommeCor = sommeCor + correlation(vect1,vect2,'horizontal');
-  end
+
+    if (Q^2-Q>k)
+        posK = rg2pos(sigma_moins_1(k),P,Q)+1;
+        posKdessous = rg2pos(sigma_moins_1(k+Q),P,Q)+1;
+
+        vect1 = im(posK(1)+P-1,posK(2):posK(2)+P-1);
+        vect2 = im(posKdessous(1),posKdessous(2):posKdessous(2)+P-1);
+
+        if max(vect1)~=0 && max(vect2)~=0
+            sommeCor = sommeCor +  correlation(vect1,vect2);
+        else
+            % sommeCor =  sommeCor-0.5;
+        end
+    
+    end
 
 end
+
+
+resultat = sommeCor;
+
 
